@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Items</h2>
+<ul>
+    {% for item in items %}
+    <li>
+        <a href="{{ url_for('item_details', item_id=item[0]) }}">
+            {{ item[1] }} - {{ item[2] }} ({{ item[3] }})
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ item[1] }}</h2>
+<p>{{ item[2] }}</p>
+<p>Last known location: {{ item[3] }}</p>
+<img src="{{ url_for('get_image', item_id=item[0]) }}" alt="Image of {{ item[1] }}">
+{% endblock %}

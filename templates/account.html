@@ -2,7 +2,7 @@
 
 <html lang="en">
 
-    <head style="background-color: darkslateblue;">
+    <head style="background-color: #140095;">
 
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -24,7 +24,7 @@
 
     </head>
 
-    <body style="background-color: darkslateblue;">
+    <body style="background-color: #140095;">
         
         <nav class="navbar navbar-light bg-light">
             <a style="text-align: center;" class="navbar-brand" href="#">
@@ -47,23 +47,25 @@
         </nav>
 
         <main style="width: 50rem;" class="container p-3 col d-flex justify-content-center">
-            <button class="btn btn-success"></button>
+            
             <div class="card text-center">
                 <div class="card-body">
                   <h5 class="card-title">Your Account</h5>
+                  <form action="/account" method="POST">                
                   <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">First Name</span>
-                    <input type="text" class="form-control" placeholder="John" aria-label="First Name" aria-describedby="basic-addon1">
+                    <input type="text" name = "first" class="form-control" placeholder="{{items[0][0]}}" aria-label="First Name" aria-describedby="basic-addon1">
                   </div>
                   <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">Last Name</span>
-                    <input type="text" class="form-control" placeholder="Smith" aria-label="Last Name" aria-describedby="basic-addon1">
+                    <input type="text" name = "last" class="form-control" placeholder="{{items[0][1]}}" aria-label="Last Name" aria-describedby="basic-addon1">
                   </div>
                   <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Your Email" aria-label="UC Davis Email" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" placeholder="{{items[0][2]}}" aria-label="UC Davis Email" aria-describedby="basic-addon2">
                     <span class="input-group-text" id="basic-addon2">@ucdavis.com</span>
                   </div>
-                  <a href="/updateinfo" class="btn btn-outline-success">Save Info</a>
+                  <button type="submit" class="btn btn-outline-success">Save Info</button>
+                </form>
                 </div>
               </div>
         </main>
