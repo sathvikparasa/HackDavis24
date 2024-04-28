@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, send_file, flash, redirect, session
 from io import BytesIO
 import pymysql
+from base64 import b64encode
+import base64
+from datetime import date
 
 from helpers import login_required
 
@@ -33,9 +36,10 @@ def index():
         # Connect to MySQL
         with pymysql.connect(**conn_params) as conn:
             with conn.cursor() as cursor:
-                cursor.execute("SELECT id, title, description, last_known_location, reward, date_posted FROM items WHERE title LIKE %s", [search_query])
+                cursor.execute("SELECT id, title, description, last_known_location, reward, date_posted, image_reference FROM items WHERE title LIKE %s", [search_query])
                 items = cursor.fetchall()
-
+                # for item in items:
+                #     item[7]
         return render_template('dashboard.html', items=items)
     
 @app.route('/register', methods=['GET', 'POST'])
@@ -78,9 +82,7 @@ def register():
         with pymysql.connect(**conn_params) as conn:
             with conn.cursor() as cursor:
                 query = "INSERT INTO users (email, password) VALUES (%s, %s)"
-                cursor.execute(query, email, password)
-
-        
+                cursor.execute(query, [email, password])
         return redirect("/")
 
 @app.route('/account', methods=['GET', 'POST'])
@@ -129,6 +131,26 @@ def login():
 @app.route("/logout")
 def logout():
     session.clear()
+    return redirect("/")
+
+@app.route("/add", methods=['POST'])
+def add():
+    title = request.form.get("title")
+    description = request.form.get("description")
+    last_location = request.form.get("last_location")
+    picture = request.files("picture")
+    data = picture.read()
+    render_file =  base64.b64encode(data).decode('ascii') 
+    reward = request.form.get("reward")
+    today = date.today()
+
+    with pymysql.connect(**conn_params) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT user_id FROM users WHERE email = %s", [session["email_id"]])
+            items = cursor.fetchall()
+            id = items[0][0]
+            cursor.execute("INSERT INTO items (title, reward, description, date_posted, user_id, last_known_location, image_reference) VALUES (%s, %s, %s, %s, %s, %s, %s)", [title, reward, description, today, id, last_location, render_file, reward])
+
     return redirect("/")
 
 
