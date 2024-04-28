@@ -50,6 +50,22 @@ def index():
     return render_template("dashboard.html", items=items)
 
 
+@app.route('/yourposts', methods=['GET', 'POST'])
+def index():
+    conn = get_db_connection()  # Open a new connection
+    cursor = conn.cursor()
+
+    if request.method == "GET":
+        items = cursor.execute("SELECT items.title, items.description, items.date_posted, items.location, items.reward, users.first_name, users.last_name FROM items LEFT JOIN users ON users.email = items.email;").fetchall()
+        conn.close()  # Close the connection after use
+        return render_template("dashboard.html", items=items)
+
+    search_query = request.form.get('search')
+    items = cursor.execute("SELECT items.title, items.description, items.date_posted, items.location, items.reward, users.first_name, users.last_name FROM items LEFT JOIN users ON users.email = items.email WHERE title LIKE ?", (f"%{search_query}%",)).fetchall()
+    conn.close()  # Close the connection after use
+    return render_template("dashboard.html", items=items)
+
+
 @app.route('/oldest', methods=['GET', 'POST'])
 def oldest():
     conn = get_db_connection()  # Open a new connection
