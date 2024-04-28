@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, send_file, flash, redirect, session
+from flask import Flask, render_template, request, send_file, flash, redirect, session, Response
 from io import BytesIO
 import sqlite3
 import os
 from werkzeug.utils import secure_filename
 import base64
 from datetime import date
+from models import Img
+# from db import db_init, db
 
 # Flask application setup
 app = Flask(__name__)
@@ -16,6 +18,34 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    pic = request.files['picture']
+
+    if not pic:
+        flash("No pic uploaded!")
+        return redirect("/")
+    
+    filename = secure_filename(pic.filename)
+    mimetype = pic.mimetype
+    img = Img(img=pic.read(),mimetype=mimetype, name=filename)
+    # db.session.add(img)
+    # db.session.commit
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO images (img, filename, mimetype) VALUES (?, ?, ?);", (img, mimetype, filename))
+    conn.committ()
+    conn.close()
+
+@app.route('/<int:id>')
+def get_img(id):
+    img = Img.query.filter_by(id=id).first()
+    if not img:
+        flash("Image not found with that ID!")
+        return redirect("/posts")
+    
+    return Response(img, mimetype=img.mimetype)
 
 # SQLite database setup
 def get_db_connection():
@@ -42,12 +72,14 @@ def index():
     if request.method == "GET":
         items = cursor.execute("SELECT * FROM items").fetchall()
         conn.close()  # Close the connection after use
-        return render_template("dashboard.html", items=items)
+        img = get_img(items[0]['id'])
+        return render_template("dashboard.html", items=items, img=img)
 
     search_query = request.form.get('search')
     items = cursor.execute("SELECT * FROM items WHERE title LIKE ?", (f"%{search_query}%",)).fetchall()
+    images = cursor.execute("SELECT images.id, images.img, images.mimetype, images.name, items.id FROM items LEFT JOIN images ON items.id WHERE items.title LIKE ?", (f"%{search_query}%",)).fetchall()
     conn.close()  # Close the connection after use
-    return render_template("dashboard.html", items=items)
+    return render_template("dashboard.html", items=items, images=images)
 
 
 @app.route('/posts', methods=['GET', 'POST'])
@@ -90,6 +122,7 @@ def reward():
     if request.method == "GET":
         items = cursor.execute("SELECT * FROM items ORDER BY reward DESC").fetchall()
         conn.close()  # Close the connection after use
+        
         return render_template("reward.html", items=items)
 
     search_query = request.form.get('search')

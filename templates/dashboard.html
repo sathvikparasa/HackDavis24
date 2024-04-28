@@ -108,7 +108,9 @@
                             </div>
                             <div class="custom-file">
                               <label for="formGroupExampleInput4" class="font-weight-bold">Picture</label>
-                              <input type="file" class="custom-file-input" name="picture" id="inputGroupFile01">
+                              <form action="/upload" enctype="multipart/form-data" method="POST">
+                                <input type="file" class="custom-file-input" name="picture" id="inputGroupFile01">
+                              </form>
                               <label class="custom-file-label" for="inputGroupFile01">Upload picture</label>
                             </div>
                           </div>
@@ -158,9 +160,10 @@
 
 
            {% for item in items %}
+           {% for image in images %}
            <div class="container p-3 col d-flex justify-content-center">
                <div class="card" style="width: 35rem; border-radius: 15px;">
-                   <img style="padding: 10px; border-radius: 25px;" class="card-img-top" src="static/default.jpeg" alt="Item image">
+                   <img style="padding: 10px; border-radius: 25px;" class="card-img-top" src="{{image['mimetype']}}" alt="{{image['name']}}">
                    <div class="card-body">
                        <h5 class="card-title">{{item[1]}}</h5>
                        <p class="card-text">{{item[2]}}</p>
