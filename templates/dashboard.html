@@ -55,8 +55,19 @@
              </div>
             
        </nav>
-
-
+       {% with messages = get_flashed_messages() %}
+       {% if messages %}
+         {% for message in messages %}
+         <div class="alert alert-warning alert-dismissible fade show" role="alert">
+           {{message}}
+           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+         {% endfor %}
+       {% endif %}
+     {% endwith %}
+      
        <main class="container p-3">
            <div class="col p-2 d-flex justify-content-center">
               <!-- <button href="/add" class="btn btn-success btn-lg p-2" data-toggle="exampleModal" data-target="#exampleModal" style="width: 35rem;">Report a Lost/Found Object</button><br/> -->
