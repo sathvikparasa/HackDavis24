@@ -6,7 +6,7 @@ from datetime import date
 from helpers import login_required
 
 app = Flask(__name__)
-database = sqlite3.connect('spot.db')
+database = sqlite3.connect('spot.db', check_same_thread=False)
 db = database.cursor()
 
 app.secret_key = 'KANUJ IS A FAT FUCKING HEADASS WHO IS ALSO SLEEPING RIGHT NOW'
@@ -148,7 +148,7 @@ def add():
     title = request.form.get("title")
     description = request.form.get("description")
     location = request.form.get("")
-    picture = request.files("picture")
+    # picture = request.files("picture")
     reward = request.form.get("reward")
     today = date.today()
 
@@ -158,7 +158,7 @@ def add():
     #         items = cursor.fetchall()
     #         id = items[0][0]
     #         cursor.execute("INSERT INTO items (title, reward, description, date_posted, user_id, last_known_location, image_reference) VALUES (%s, %s, %s, %s, %s, %s, %s)", [title, reward, description, today, id, last_location, render_file, reward])
-    db.execute("INSERT INTO items (title, description, reward, date_posted, location, image_reference, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)", (title, description, reward, today, location, picture, session['email']))
+    db.execute("INSERT INTO items (title, description, reward, date_posted, location, email) VALUES (?, ?, ?, ?, ?, ?)", (title, description, reward, today, location, session['email']))
 
     return redirect("/")
 
