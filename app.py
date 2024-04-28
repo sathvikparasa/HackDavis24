@@ -1,9 +1,6 @@
 from flask import Flask, render_template, request, send_file, flash, redirect, session
 from io import BytesIO
 import sqlite3
-import pymysql
-from base64 import b64encode
-import base64
 from datetime import date
 
 from helpers import login_required
