@@ -2,86 +2,82 @@
 
 <html lang="en">
 
-    <head style="background-color: #140095;">
+<head style="background-color: #140095;">
 
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- documentation at http://getbootstrap.com/docs/4.1/, alternative themes at https://bootswatch.com/ -->
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- https://favicon.io/emoji-favicons/money-mouth-face/ -->
-        <link href="/static/shoo-shee.ico" rel="icon">
+    <link href="/static/shoo-shee.ico" rel="icon">
 
-        <link href="styles.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
 
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-        <title>Spot It @ UC Davis: Account</title>
+    <title>Spot It @ UC Davis: Account</title>
 
-    </head>
+</head>
 
-    <body style="background-color: #140095;">
-        
-        <nav class="navbar navbar-light bg-light">
-            <a style="text-align: center;" class="navbar-brand" href="#">
-              <img src="static/SP_T_480_x_244_px.svg" height="50" class="d-inline-block align-top" alt="">
-            </a>
-            <div class="btn-group dropleft">
-                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img src="static/cat.png" height="30px">
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/dashboard">Dashboard</a>
-                    <a class="dropdown-item" href="/posts">Your Posts</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-danger" href="/logout">Log Out</a>
+<body style="background-color: #140095;">
 
-                </div>
-              </div>
-        </nav>
-
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          {% for message in messages %}
-          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            {{message}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+    <nav class="navbar navbar-light bg-light">
+        <a style="text-align: center;" class="navbar-brand" href="#">
+            <img src="static/SP_T_480_x_244_px.svg" height="50" class="d-inline-block align-top" alt="">
+        </a>
+        <div class="btn-group dropleft">
+            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="static/cat.png" height="30px">
             </button>
-          </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="/">Dashboard</a>
+                <a class="dropdown-item" href="/posts">Your Posts</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-danger" href="/logout">Log Out</a>
 
-        <main style="width: 50rem;" class="container p-3 col d-flex justify-content-center">
-            
-            <div class="card text-center">
-                <div class="card-body">
-                  <h5 class="card-title">Your Account</h5>
-                  <form action="/account" method="POST">                
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">First Name</span>
-                    <input type="text" name = "first" class="form-control" placeholder="{{items[0][0]}}" aria-label="First Name" aria-describedby="basic-addon1">
-                  </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">Last Name</span>
-                    <input type="text" name = "last" class="form-control" placeholder="{{items[0][1]}}" aria-label="Last Name" aria-describedby="basic-addon1">
-                  </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon2">Change Email</span>
-                    <input type="text" class="form-control" name = "email" placeholder="{{items[0][2]}}" aria-label="UC Davis Email" aria-describedby="basic-addon2">
-                  </div>
-                  <button type="submit" class="btn btn-outline-success">Save Info</button>
+            </div>
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <main style="width: 50rem;" class="container p-3 col d-flex justify-content-center">
+
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Your Account</h5>
+                <form action="/account" method="POST">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">First Name</span>
+                        <input type="text" name="first" class="form-control" value="{{ user_info.first_name }}" placeholder="Enter First Name" aria-label="First Name" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Last Name</span>
+                        <input type="text" name="last" class="form-control" value="{{ user_info.last_name }}" placeholder="Enter Last Name" aria-label="Last Name" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon2">Change Email</span>
+                        <input type="text" name="email" class="form-control" value="{{user_info.email}}" placeholder="rosaparks@ucdavis.edu">
+                    </div>
+                    <button type="submit" class="btn btn-outline-success">Save Changes</button>
                 </form>
-                </div>
-              </div>
-        </main>
+            </div>
+        </div>
+    </main>
 
-        <footer style="padding-top: 0px; padding-bottom: 10px;"class="text-white small text-center font-weight-bold">
-            HackDavis 2024 by Jacob Kadari, Kanuj Verma, Ashwin Charles, Sathvik Parasa
-        </footer>
-
+    <footer style="padding-top: 0px; padding-bottom: 10px" class="text-white small text-center font-weight-bold">
+      HackDavis 2024 by Jacob Kadari, Kanuj Verma, Ashwin Charles, Sathvik Parasa
+    </footer>
