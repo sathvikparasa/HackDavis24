@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head style="background-color: darkslateblue;">
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- documentation at http://getbootstrap.com/docs/4.1/, alternative themes at https://bootswatch.com/ -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- https://favicon.io/emoji-favicons/money-mouth-face/ -->
+        <link href="/static/shoo-shee.ico" rel="icon">
+
+        <link href="styles.css" rel="stylesheet">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+        <title>Spot It @ UC Davis: {% block title %}{% endblock %}</title>
+
+    </head>
+
+    <body style="background-color: darkslateblue;">
+        
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+              <img src="static/SP_T_480_x_244_px.svg" height="50" class="d-inline-block align-top" alt="">
+            </a>
+            <div class="btn-group dropleft">
+                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img src="static/cat.png" height="30px">
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/account">Account</a>
+                    <a class="dropdown-item" href="/posts">Your Posts</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger" href="/logout">Log Out</a>
+
+                </div>
+              </div>
+              
+        </nav>
+
+        <main class="container p-5 ">
+            <div class="col d-flex justify-content-center">
+                <form class="">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><img height="20px" src="static/search.png"></span>
+                      </div>
+                      <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
+                    </div>
+                </form>
+            </div>
+            
+        </main> 
+
+        <footer class="text-white small text-center font-weight-bold">
+            HackDavis 2024 by Jacob Kadari, Kanuj Verma, Ashwin Charles, Sathvik Parasa
+        </footer>
+    </body>
+</html>
