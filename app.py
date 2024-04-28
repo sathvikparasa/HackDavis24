@@ -98,10 +98,13 @@ def account():
         with pymysql.connect(**conn_params) as conn:
                 with conn.cursor() as cursor:
                     # query = "SELECT email, password FROM users WHERE email = jdoe@example.com"
-                    first = request.form.get("first_name")
-                    last = request.form.get("last_name")
+                    first = request.form.get("first")
+                    last = request.form.get("last")
+                    email = request.form.get("email") + "@ucdavis.edu"
                     # cursor.execute(query)
-                    cursor.execute('INSERT INTO users (first_name, last_name) VALUES (%s, %s) WHERE email = %s;' [first, last, session["email"]])
+                    
+                    cursor.execute('UPDATE users (first_name, last_name, email) VALUES (%s, %s, %s) WHERE email = %s;' [first, last, email, session['email']])
+                    session["email"] = email
                     items = cursor.fetchall()
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -146,7 +149,7 @@ def add():
 
     with pymysql.connect(**conn_params) as conn:
         with conn.cursor() as cursor:
-            cursor.execute("SELECT user_id FROM users WHERE email = %s", [session["email_id"]])
+            cursor.execute("SELECT user_id FROM users WHERE email = %s", [session["email"]])
             items = cursor.fetchall()
             id = items[0][0]
             cursor.execute("INSERT INTO items (title, reward, description, date_posted, user_id, last_known_location, image_reference) VALUES (%s, %s, %s, %s, %s, %s, %s)", [title, reward, description, today, id, last_location, render_file, reward])
