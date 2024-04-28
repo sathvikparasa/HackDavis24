@@ -42,9 +42,20 @@
 
                 </div>
               </div>
-              
-              
         </nav>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
 
         <main style="width: 50rem;" class="container p-3 col d-flex justify-content-center">
             
@@ -61,8 +72,8 @@
                     <input type="text" name = "last" class="form-control" placeholder="{{items[0][1]}}" aria-label="Last Name" aria-describedby="basic-addon1">
                   </div>
                   <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="{{items[0][2]}}" aria-label="UC Davis Email" aria-describedby="basic-addon2">
-                    <span class="input-group-text" id="basic-addon2">@ucdavis.com</span>
+                    <span class="input-group-text" id="basic-addon2">Change Email</span>
+                    <input type="text" class="form-control" name = "email" placeholder="{{items[0][2]}}" aria-label="UC Davis Email" aria-describedby="basic-addon2">
                   </div>
                   <button type="submit" class="btn btn-outline-success">Save Info</button>
                 </form>

@@ -55,35 +55,83 @@
              </div>
             
        </nav>
-
-
+       {% with messages = get_flashed_messages() %}
+       {% if messages %}
+         {% for message in messages %}
+         <div class="alert alert-warning alert-dismissible fade show" role="alert">
+           {{message}}
+           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+         {% endfor %}
+       {% endif %}
+     {% endwith %}
+      
        <main class="container p-3">
            <div class="col p-2 d-flex justify-content-center">
               <!-- <button href="/add" class="btn btn-success btn-lg p-2" data-toggle="exampleModal" data-target="#exampleModal" style="width: 35rem;">Report a Lost/Found Object</button><br/> -->
-              <!-- Modal -->
               <button type="button" class="btn btn-success btn-lg p-2" data-toggle="modal" style="width: 35rem;" data-target="#exampleModal">Report a Lost/Found Object</button>              
               <!-- Modal -->
               <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Report a Lost/Missing Item</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Report a Lost/Found Object</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <form>
                     <div class="modal-body">
+                      <form action="/add" method="POST">
+                        
+                        <div class="form-group">
+                          <label for="formGroupExampleInput" class="font-weight-bold">Title</label>
+                          <input type="text" name="title" class="form-control" id="formGroupExampleInput" placeholder="Found a cow!">
+                        </div>
+
+                        <div class="form-group">
+                          <label for="formGroupExampleInput2" class="font-weight-bold">Description</label>
+                          <textarea class="form-control" name="description" id="exampleFormControlTextarea1" placeholder="I found a brown cow! She has a pink heart on her right ear and is very vocal! She also has a tag that says her name is Kanuj!" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="formGroupExampleInput3" class="font-weight-bold">Last Seen Location</label>
+                          <input type="text" name="last_location" class="form-control" id="formGroupExampleInput" placeholder="Last seen in the Silo.">
+                        </div>
+
+                        <div class="form-group">
+                          <label for="formGroupExampleInput3" class="font-weight-bold">Picture (recommended)</label>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">Upload</span>
+                            </div>
+                            <div class="custom-file">
+                              <label for="formGroupExampleInput4" class="font-weight-bold">Picture</label>
+                              <input type="file" class="custom-file-input" name="picture" id="inputGroupFile01">
+                              <label class="custom-file-label" for="inputGroupFile01">Upload picture</label>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="form-group">
+                          <label for="formGroupExampleInput3" class="font-weight-bold">Reward (leave blank if found)</label>
+                          <input type="text" name="reward" class="form-control" id="formGroupExampleInput" placeholder="$1.73">
+                        </div>
+                        
                       
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Post</button>
+                      <button type="submit" class="btn btn-success">Post</button>
                     </div>
                   </form>
                   </div>
                 </div>
               </div>
+
+
            </div>
            <div class="col d-flex justify-content-center">
                <form method="POST" style="width: 35rem;" class=" d-grid gap-2 mx-auto form-control-mb">
